@@ -26,7 +26,8 @@ var UserSchema = new mongoose.Schema({
   bio: String,
   image: String,
   hash: String,
-  salt: String
+  salt: String,
+  favorites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Currency'}],
 }, {timestamps: true});
 
 UserSchema.plugin(uniqueValidator, {message: 'is already taken.'});
@@ -90,25 +91,6 @@ UserSchema.methods.unfavorite = function (id) {
 UserSchema.methods.isFavorite = function (id) {
   return this.favorites.some(function (favoriteId) {
     return favoriteId.toString() === id.toString();
-  });
-};
-
-UserSchema.methods.follow = function (id) {
-  if (this.following.indexOf(id) === -1) {
-    this.following.push(id);
-  }
-
-  return this.save();
-};
-
-UserSchema.methods.unfollow = function (id) {
-  this.following.remove(id);
-  return this.save();
-};
-
-UserSchema.methods.isFollowing = function (id) {
-  return this.following.some(function (followId) {
-    return followId.toString() === id.toString();
   });
 };
 
