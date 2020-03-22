@@ -10,6 +10,7 @@ import {Currency} from '../../models/currency';
 export class AllComponent implements OnInit {
 
   currencies: Currency[];
+  loading = true;
 
   constructor(private currencyService: CurrenciesService) {
   }
@@ -17,6 +18,7 @@ export class AllComponent implements OnInit {
   ngOnInit(): void {
     this.currencyService.getAll().subscribe(response => {
       this.currencies = response.currencies;
+      this.loading = false;
     });
   }
 

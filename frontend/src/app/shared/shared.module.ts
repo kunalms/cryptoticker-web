@@ -10,6 +10,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatTableModule} from '@angular/material/table';
 import {CurrencyTableComponent} from './currency-table/currency-table.component';
 import {MatIconModule} from '@angular/material/icon';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatButtonModule,
     MatChipsModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   exports: [SpinnerComponent, CurrencyTableComponent]
 })

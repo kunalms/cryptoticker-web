@@ -1,12 +1,17 @@
-<nav mat-tab-nav-bar>
-  <a [active]="false" fxFlex="50%"
-     mat-tab-link
-     routerLink="/currencies/all">
-    All Listings
-  </a>
-  <a [active]="true" fxFlex="50%"
-     mat-tab-link
-     routerLink="/currencies/favourites">
-    Your favourites
-  </a>
-</nav>
+<div class="currency-container" fxLayout="column">
+  <nav fxFlex="49px" mat-tab-nav-bar>
+    <a [active]="false" fxFlex="50%"
+       mat-tab-link
+       routerLink="/currencies/all">
+      All Listings
+    </a>
+    <a [active]="true" fxFlex="50%"
+       mat-tab-link
+       routerLink="/currencies/favourites">
+      WatchList
+    </a>
+  </nav>
+  <app-currency-table [currencies]="currencies" [isFavouriteScreen]="true" fxFlex="calc(100% - 105px)" fxLayout="column"
+                      style="overflow: auto"></app-currency-table>
+</div>
+<app-spinner *ngIf="loading"></app-spinner>

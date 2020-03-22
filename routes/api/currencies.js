@@ -18,25 +18,28 @@ router.param('currency_id', function (req, res, next, id) {
 
 
 router.get('/', auth.required, function (req, res, next) {
+    console.log('favourites', req.query.favourites);
     var query = {};
 
-    return Promise.all([
-        Currency.find(query)
-            .exec(),
-        Currency.count(query).exec(),
-        req.payload ? User.findById(req.payload.id) : null,
-    ]).then(function (results) {
-        var currencies = results[0];
-        var currenciesCount = results[1];
-        var user = results[2];
+    User.findById(req.payload.id).then(user => {
+        if (req.query.favourites) {
+            query._id = {$in: user.favorites};
+        }
+        return Promise.all([
+            Currency.find(query).exec(),
+            Currency.count(query).exec()
+        ]).then(function (results) {
+            var currencies = results[0];
+            var currenciesCount = results[1];
 
-        return res.json({
-            currencies: currencies.map(function (article) {
-                return article.toJSONFor(user);
-            }),
-            currenciesCount: currenciesCount
-        });
-    }).catch(next);
+            return res.json({
+                currencies: currencies.map(function (article) {
+                    return article.toJSONFor(user);
+                }),
+                currenciesCount: currenciesCount
+            });
+        }).catch(next);
+    });
 });
 
 // Favorite an currency

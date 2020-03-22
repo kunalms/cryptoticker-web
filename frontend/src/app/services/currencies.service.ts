@@ -13,8 +13,13 @@ export class CurrenciesService {
   constructor(private http: HttpClient) {
   }
 
-  getAll() {
-    return this.http.get<ResponseMetatData>(this.currenciesBaseUrl).pipe(map((response) => {
+  getAll(favourites: boolean = false) {
+    let url = this.currenciesBaseUrl;
+    if (favourites) {
+      url += '?favourites=true';
+    }
+    console.log(url);
+    return this.http.get<ResponseMetatData>(url).pipe(map((response) => {
       response.currencies.forEach(
         currency => currency.imageUrl = 'https://s2.coinmarketcap.com/static/img/coins/64x64/' + currency.id + '.png');
       return response;

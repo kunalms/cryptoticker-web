@@ -5,6 +5,7 @@ import {FavouritesRoutingModule} from './favourites-routing.module';
 import {FavouritesComponent} from './favourites.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {FlexModule} from '@angular/flex-layout';
+import {SharedModule} from '../../shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {FlexModule} from '@angular/flex-layout';
     CommonModule,
     FavouritesRoutingModule,
     MatTabsModule,
-    FlexModule
+    FlexModule,
+    SharedModule
   ]
 })
 export class FavouritesModule {

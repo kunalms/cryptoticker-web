@@ -14,5 +14,4 @@
   <app-currency-table [currencies]="currencies" fxFlex="calc(100% - 105px)" fxLayout="column"
                       style="overflow: auto"></app-currency-table>
 </div>
-
-
+<app-spinner *ngIf="loading"></app-spinner>

@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {Currency} from '../../models/currency';
+import {CurrenciesService} from '../../services/currencies.service';
 
 @Component({
   selector: 'app-favourites',
@@ -7,10 +9,16 @@ import {Component, OnInit} from '@angular/core';
 })
 export class FavouritesComponent implements OnInit {
 
-  constructor() {
+  currencies: Currency[];
+  loading = true;
+
+  constructor(private currencyService: CurrenciesService) {
   }
 
   ngOnInit(): void {
+    this.currencyService.getAll(true).subscribe(response => {
+      this.currencies = response.currencies;
+      this.loading = false;
+    });
   }
-
 }

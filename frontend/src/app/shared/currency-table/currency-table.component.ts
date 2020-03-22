@@ -4,6 +4,7 @@ import {Currency} from '../../models/currency';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-currency-table',
@@ -31,7 +32,7 @@ export class CurrencyTableComponent implements OnInit {
 
   @Input() isFavouriteScreen = false;
 
-  constructor(private currencyService: CurrenciesService, private changeDetectorRefs: ChangeDetectorRef) {
+  constructor(private currencyService: CurrenciesService, private changeDetectorRefs: ChangeDetectorRef, private matSnackBar: MatSnackBar) {
   }
 
   @Input('currencies')
@@ -51,6 +52,10 @@ export class CurrencyTableComponent implements OnInit {
     this.currencyService.addToFavourite(id).subscribe((result: any) => {
       this.currencyList[index].favorited = result.currency.favorited;
       this.currencyList[index].favoritesCount = result.currency.favoritesCount;
+      this.matSnackBar.open('Successfully added ' + this.currencyList[index].name + ' to your watchlist.', 'Ok', {
+        duration: 3000,
+        verticalPosition: 'top'
+      });
       this.changeDetectorRefs.detectChanges();
     });
   }
@@ -59,6 +64,10 @@ export class CurrencyTableComponent implements OnInit {
     this.currencyService.removeFromFavourites(id).subscribe((result: any) => {
       this.currencyList[index].favorited = result.currency.favorited;
       this.currencyList[index].favoritesCount = result.currency.favoritesCount;
+      this.matSnackBar.open('Successfully removed ' + this.currencyList[index].name + ' from your watchlist.', 'Ok', {
+        duration: 3000,
+        verticalPosition: 'top'
+      });
       this.changeDetectorRefs.detectChanges();
     });
   }
