@@ -1,8 +1,8 @@
 <!-- nav -->
 <mat-toolbar class="expanded-toolbar" color="primary">
     <span>
-      <button mat-button routerLink="/">Tic Tac Toe</button>
-      <button mat-button routerLink="/"><mat-icon>home</mat-icon></button>
+      <button mat-button routerLink="/"><img src="assets/app-logo.png"
+                                             style="height: 30px; width: 30px">Crypto ticker</button>
     </span>
   <div fxLayout="row" fxShow="false" fxShow.gt-sm>
     <button *ngIf="!currentUser" mat-button routerLink="/verification/login">

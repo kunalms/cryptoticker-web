@@ -1,0 +1,112 @@
+<div fxFlex="calc(100% - 105px)" fxLayout="column" style="overflow: auto">
+  <table [dataSource]="dataSource" mat-table multiTemplateDataRows>
+    <!-- Rank Column -->
+    <ng-container matColumnDef="rank">
+      <th *matHeaderCellDef mat-header-cell>Rank</th>
+      <td *matCellDef="let element" mat-cell> {{element.cmcRank}} </td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th *matHeaderCellDef mat-header-cell>Name</th>
+      <td *matCellDef="let element" mat-cell>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+          <img [src]="element.imageUrl" class="currency-small-icon" onerror="this.src='/assets/app-logo.png'">
+          <div fxLayout="column">
+            <div class="currency-name" fxLayout="row" fxLayoutAlign="start center">
+              {{element.name}}
+              <mat-icon *ngIf="element.favorited && !isFavouriteScreen" class="favourite-icon" color="warn">favorite
+              </mat-icon>
+            </div>
+            <div class="currency-symbol">
+              {{element.symbol}}
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <th *matHeaderCellDef mat-header-cell>Price</th>
+      <td *matCellDef="let element" mat-cell>{{element.quote.USD.price | currency}}</td>
+    </ng-container>
+    <!-- Price Change last hour Column -->
+    <ng-container matColumnDef="price_change_1">
+      <th *matHeaderCellDef mat-header-cell>Change</th>
+      <td *matCellDef="let element"
+          [ngClass]="{'positive': element.quote.USD.percent_change_1h > 0, 'negative': element.quote.USD.percent_change_1h < 0}"
+          mat-cell>{{element.quote.USD.percent_change_1h | number}}%
+      </td>
+    </ng-container>
+    <!-- Tags -->
+    <ng-container matColumnDef="tags">
+      <th *matHeaderCellDef mat-header-cell>Tags</th>
+      <td *matCellDef="let element" mat-cell>
+        <mat-chip-list aria-label="Fish selection">
+          <mat-chip *ngFor="let tag of element.tags" color="primary" selected>{{tag}}</mat-chip>
+        </mat-chip-list>
+      </td>
+    </ng-container>
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td *matCellDef="let element; let i = dataIndex;" [attr.colspan]="columnsToDisplay.length" mat-cell>
+        <div [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+             class="example-element-detail">
+          <mat-card class="currency-detail-card mat-elevation-z4" fxFlex="100%"
+                    fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between center"
+                    fxLayoutAlign.lt-sm="start">
+            <div fxFlex="25%" fxFlex.lt-sm="100%" fxLayout="row" fxLayoutAlign="space-between center"
+                 fxLayoutAlign.lt-sm="center center" fxLayoutGap.gt-xs="10px">
+              <div fxFlex="80px" fxFlex.lt-sm="50%">
+                <img [src]="element.imageUrl" class="currency-icon" onerror="this.src='/assets/app-logo.png'">
+              </div>
+              <div fxFlex fxFlex.lt-sm="100%">
+                <div><span class="currency-name">{{element.name}}</span><span
+                  style="font-weight: 300; padding-left: 5px">({{element.symbol}})</span>
+                </div>
+                <div>Listed on: <span class="bold-text">{{element.dateAdded | date }}</span></div>
+                <div>On Watchlist of: <span class="bold-text">{{element.favoritesCount + ' people' || "--"}}</span>
+                </div>
+              </div>
+            </div>
+            <div fxFlex="30%" fxFlex.lt-sm="100%">
+              <div>Change (24 Hr): <span
+                [ngClass]="{'positive': element.quote.USD.percent_change_24h > 0, 'negative': element.quote.USD.percent_change_24h < 0}"
+                class="bold-text">{{element.quote.USD.percent_change_24h | number: '':'en-US'}}%</span></div>
+              <div>Change (7 Days): <span
+                [ngClass]="{'positive': element.quote.USD.percent_change_7d > 0, 'negative': element.quote.USD.percent_change_7d < 0}"
+                class="bold-text">{{element.quote.USD.percent_change_7d | number: '':'en-US'}}%</span></div>
+              <div>Volume (24 Hr): <span
+                class="bold-text">{{element.quote.USD.volume_24h | number: '':'en-US'}}</span></div>
+            </div>
+            <div fxFlex="30%" fxFlex.lt-sm="50%">
+              <div>Market Cap: <span class="bold-text">{{element.quote.USD.market_cap | currency}}</span></div>
+              <div>Circulating Supply: <span class="bold-text">{{element.circulatingSupply | number: '':'en-US'}}<span
+                class="currency-symbol" style="margin-left: 5px">{{element.symbol}}</span></span></div>
+            </div>
+            <mat-card-actions>
+              <button (click)="addToFavourite(element.id, i)" *ngIf="!element.favorited" class="full-width"
+                      color="primary"
+                      mat-raised-button>Add to Watchlist
+              </button>
+              <button (click)="removeFromFavourites(element.id, i)" *ngIf="element.favorited" class="full-width"
+                      color="warn"
+                      mat-raised-button>Remove from Watchlist
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </td>
+    </ng-container>
+    <tr *matHeaderRowDef="columnsToDisplay; sticky: true" mat-header-row></tr>
+    <tr (click)="expandedElement = expandedElement === element ? null : element"
+        *matRowDef="let element; columns: columnsToDisplay;"
+        [class.example-expanded-row]="expandedElement === element"
+        class="example-element-row"
+        mat-row>
+    </tr>
+    <tr *matRowDef="let row; columns: ['expandedDetail'];" class="example-detail-row" mat-row></tr>
+  </table>
+</div>
+<mat-paginator [length]="length" [pageSizeOptions]="pageSizeOptions"
+               [pageSize]="pageSize"
+               fxFlex="56px">
+</mat-paginator>

@@ -6,18 +6,17 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'game'
+    redirectTo: 'currencies'
   },
   {
     path: 'verification',
     loadChildren: () => import('./verification/verification.module').then(m => m.VerificationModule)
   },
   {
-    path: 'game',
-    loadChildren: () => import('./game/game.module').then(m => m.GameModule),
+    path: 'currencies',
+    loadChildren: () => import('./currencies/currencies.module').then(m => m.CurrenciesModule),
     canActivateChild: [AuthGuard]
-  },
-
+  }
 ];
 
 @NgModule({

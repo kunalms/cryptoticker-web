@@ -1,0 +1,91 @@
+
+.currency-small-icon {
+  height: 30px;
+  width: 30px;
+}
+
+.currency-icon {
+  height: 80px;
+  width: 80px;
+}
+
+.currency-name {
+  font-size: 14px;
+  font-weight: 500;
+  padding-right: 5px;
+}
+
+.bold-text {
+  font-weight: 500;
+}
+
+.currency-symbol {
+  font-size: 12px;
+  font-weight: 300;
+}
+
+table {
+  width: 100%;
+  overflow: auto;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.positive {
+  color: #81d058;
+  font-weight: 700;
+  min-width: 60px;
+
+  &::before {
+    content: '+';
+  }
+}
+
+.negative {
+  color: #fc0000;
+  font-weight: 700;
+  min-width: 60px;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.currency-detail-card {
+  margin: 8px;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type {
+  padding-left: 10px;
+}
+
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type {
+  padding-right: 10px;
+}
+
+.mat-card > .mat-card-actions:last-child {
+  margin-bottom: 0;
+  padding: 8px 0;
+}
+
+.favourite-icon {
+  font-size: 16px;
+  margin-left: 5px;
+  height: 16px;
+  width: 16px;
+}

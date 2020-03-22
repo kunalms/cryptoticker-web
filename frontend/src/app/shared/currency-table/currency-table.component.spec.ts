@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {MultiComponent} from './multi.component';
+import {CurrencyTableComponent} from './currency-table.component';
 
-describe('MultiComponent', () => {
-  let component: MultiComponent;
-  let fixture: ComponentFixture<MultiComponent>;
+describe('CurrencyTableComponent', () => {
+  let component: CurrencyTableComponent;
+  let fixture: ComponentFixture<CurrencyTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MultiComponent]
+      declarations: [CurrencyTableComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MultiComponent);
+    fixture = TestBed.createComponent(CurrencyTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

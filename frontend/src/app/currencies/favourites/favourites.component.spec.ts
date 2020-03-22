@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {NewGameDialogComponent} from './new-game-dialog.component';
+import {FavouritesComponent} from './favourites.component';
 
-describe('NewGameDialogComponent', () => {
-  let component: NewGameDialogComponent;
-  let fixture: ComponentFixture<NewGameDialogComponent>;
+describe('FavouritesComponent', () => {
+  let component: FavouritesComponent;
+  let fixture: ComponentFixture<FavouritesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NewGameDialogComponent]
+      declarations: [FavouritesComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewGameDialogComponent);
+    fixture = TestBed.createComponent(FavouritesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
