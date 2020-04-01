@@ -3,7 +3,6 @@ import os
 
 import requests
 from requests import TooManyRedirects, Timeout
-from pymongo import MongoClient
 
 url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
 parameters = {
@@ -19,22 +18,18 @@ headers = {
 session = requests.Session()
 session.headers.update(headers)
 
-client = MongoClient('mongodb://localhost/')
-
-db = client.cryptoticker
-currencies_coll = db.currencies
-
 try:
     response = session.get(url, params=parameters)
     data = json.loads(response.text)
-    with open('data.txt', 'w') as outfile:
-        json.dump(data, outfile)
+    full_path = os.path.expanduser('~/currencies.json')
+    with open(full_path, 'w') as outfile:
+        json.dump(data['data'], outfile)
 
-    with open('data.txt', 'r') as inpFile:
-        response = json.load(inpFile)
-        currencies = response['data']
-        for currency in currencies:
-            result = currencies_coll.replace_one({'id': currency['id']}, currency, True)
+    cmd = 'mongoimport --db cryptoticker --collection currencies --jsonArray --mode=upsert --upsertFields=id --file '+ full_path
+    returned_value = os.system(cmd)
+    print('returned value:', returned_value)
+
+    os.remove(full_path)
 
 except (ConnectionError, Timeout, TooManyRedirects) as e:
     print(e)
