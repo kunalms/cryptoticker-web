@@ -32,7 +32,6 @@ try:
     data = json.loads(response.text)
     full_path = os.path.expanduser('~/currencies.json')
     with open(full_path, 'w') as outfile:
-        logging.info(data)
         json.dump(data['data'], outfile)
 
     cmd = 'mongoimport --db cryptoticker --collection currencies --jsonArray --mode=upsert --upsertFields=id --file '+ full_path
