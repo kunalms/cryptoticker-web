@@ -32,11 +32,12 @@ try:
     data = json.loads(response.text)
     full_path = os.path.expanduser('~/currencies.json')
     with open(full_path, 'w') as outfile:
+        logging.info(data)
         json.dump(data['data'], outfile)
 
     cmd = 'mongoimport --db cryptoticker --collection currencies --jsonArray --mode=upsert --upsertFields=id --file '+ full_path
     now = datetime.now()
-    logging.info('persisting data to the db at:' + now.strftime("%H:%M:%S"))
+    logging.info('persisting data using '+ cmd +' to the db at:' + now.strftime("%H:%M:%S"))
     returned_value = os.system(cmd)
     now = datetime.now()
     logging.info('persisted data to the db at:' + now.strftime("%H:%M:%S"))
