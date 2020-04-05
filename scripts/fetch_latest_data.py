@@ -7,7 +7,7 @@ from datetime import datetime
 import requests
 from requests import TooManyRedirects, Timeout
 
-logging.basicConfig(filename='api_call.log')
+logging.basicConfig(filename='api_call.log', level=logging.INFO)
 
 url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
 parameters = {
